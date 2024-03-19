@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit';
+
+
 
 const initialState = {
   currentUser: null,
@@ -6,6 +8,12 @@ const initialState = {
   loading: false,
 };
 
+export const fetchUserListings = createAsyncThunk('user/fetchUserListings', async () => {
+  const res = await fetch('/api/user/listings');
+  const data = await res.json();
+
+  return data;
+});
 const userSlice = createSlice({
   name: 'user',
   initialState,

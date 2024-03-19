@@ -18,7 +18,7 @@ import {
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import MyListings from './myListings';
+
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -32,7 +32,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const [showMyListings, setShowMyListings] = useState(false);
   const toggleMyListings = () => {
-    setShowMyListings(!showMyListings);
+  setShowMyListings(!showMyListings);
   };
   // firebase storage
   // allow read;
