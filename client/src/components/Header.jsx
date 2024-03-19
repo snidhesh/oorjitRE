@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
+
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,7 +65,7 @@ export default function Header() {
           >
         
             {currentUser? (
-              <span>Hello </span>
+              <span>Hello {currentUser.username} </span>
             ) : (
               <Link to='/sign-in'>Sign In</Link>
             )}
