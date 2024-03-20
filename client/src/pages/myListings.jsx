@@ -18,7 +18,7 @@ const MyListings = () => {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`); // Make sure currentUser is defined
+      const res = await fetch(`/api/user/listings/${currentUser.name}`); // Make sure currentUser is defined
       const data = await res.json();
       if (data.success === false) {
         setShowListingsError(true);
