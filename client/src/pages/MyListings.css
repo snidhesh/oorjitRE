@@ -1,0 +1,102 @@
+.my-listings-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.listings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.listing-card {
+  width: calc(50% - 10px);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.listing-image {
+  width: 100%;
+  height: auto;
+}
+
+.listing-name {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.listing-price,
+.listing-type,
+.listing-bedrooms {
+  margin: 10px 0;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.delete-button,
+.edit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.edit-button {
+  background-color: #008000;
+  color: #fff;
+}
+
+.listing-image-small {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.listing-card {
+  /* ... */
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-container {
+  width: 40%; /* Adjust as needed */
+}
+
+.details-container {
+  width: 58%; /* Adjust as needed */
+}
+
+.listing-image {
+  width: 100%;
+  height: auto;
+}
