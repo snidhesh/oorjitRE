@@ -2,13 +2,28 @@ import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-
+import { useDispatch } from 'react-redux';
+import ReactLogo from './logo.svg';
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutUserStart,
+} from '../redux/user/userSlice';
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  
+  const handleToggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
@@ -25,20 +40,31 @@ export default function Header() {
     }
   }, [location.search]);
 
-  const handleSignOut = (e) => {
-    e.preventDefault();
-    // Sign out the user
-    //...
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+      navigate('/sign-in');
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
   };
 
   return (
     <header className='bg-slate-200 shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to='/'>
-          <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
+          {/* <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
             <span className='text-slate-500'>oOrjit</span>
-            <span className='text-slate-700'>&nbsp;Portal</span>
-          </h1>
+            <span className='text-slate-700'>&nbsp;Real Estate</span>
+          </h1> */}
+          <img src={ReactLogo} alt='oOrjit Real Estate Logo' className='h-12 w-auto' />
         </Link>
         <form
           onSubmit={handleSubmit}
@@ -59,9 +85,12 @@ export default function Header() {
         <ul className='flex gap-4'>
          <Link to='/'><li>Home</li></Link>
          <Link to='/about'> <li>About</li></Link>
+       
           <button
-            className='flex items-center text-slate-700 hover:underline'
+
+            onClick={handleToggleDropdown}
             disabled={!currentUser}
+            className='flex items-center text-slate-700 hover:underline'
           >
         
             {currentUser? (
@@ -77,10 +106,15 @@ export default function Header() {
               <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
             </svg>
           </button></ul>
-          <ul
+          {/* <ul
             className='absolute bg-slate-100 mt-2 rounded-lg shadow-md w-40'
             style={{ top: '40px', left: '10px' }}
             hidden={!currentUser}
+          > */}
+          <ul
+            className='absolute bg-slate-100 mt-2 rounded-lg shadow-md w-40'
+            style={{ top: '40px', left: '10px' }}
+            hidden={!currentUser || !isDropdownVisible}
           >
             <li className='py-2 px-4 hover:bg-slate-200'>
               <Link to='/profile'>My Profile</Link>
@@ -89,9 +123,7 @@ export default function Header() {
               <Link to='/mylistings'>My Listings</Link>
             </li>
             <li className='py-2 px-4 hover:bg-slate-200'>
-              <a href='#' onClick={(e) => handleSignOut(e)}>
-                Sign Out
-              </a>
+              <button onClick={handleSignOut}>Sign Out</button>
             </li>
           </ul>
         </div>
