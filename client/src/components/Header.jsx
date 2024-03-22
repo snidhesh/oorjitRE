@@ -119,6 +119,9 @@ export default function Header() {
               <Link to='/profile'>My Profile</Link>
             </li>
             <li className='py-2 px-4 hover:bg-slate-200'>
+              <Link to='/create-listing'>Create Listing</Link>
+            </li>
+            <li className='py-2 px-4 hover:bg-slate-200'>
               <Link to='/mylistings'>My Listings</Link>
             </li>
             <li className='py-2 px-4 hover:bg-slate-200'>
