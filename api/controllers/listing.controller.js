@@ -10,10 +10,17 @@ export const createListing = async (req, res, next) => {
     next(error);
   }
 };
-export const sendEmail = async ({ email, subject, text }) => {
-  // function implementation
+export const sendEmail = async (req, res)=> {
 
- // console.log ( "inside sendEmail function");
+  const { name, email, phone, message , landlordEmail } = req.body;
+  console.log(req.body); 
+
+  const text = `
+    Name: ${name},
+    Email: ${email},
+    Phone: ${phone},
+    Message: ${message}
+  `;
 
  const transporter = nodemailer.createTransport({
   // Transporter configuration (e.g., SMTP)
@@ -28,9 +35,9 @@ export const sendEmail = async ({ email, subject, text }) => {
 
 const mailOptions = {
   from: 'nidhesh.pillai@ispgweb.com', // sender address
-  to: 'snidhesh@gmail.com', // list of receivers
-  subject: subject || 'Email Subject', // Subject line
-  text: text || 'Email Body', // plain text body
+  to: landlordEmail, // list of receivers
+  subject: subject || 'New Enquiry', // Subject line
+  text: text || message, // plain text body
   // html: '<b>Hello world?</b>' // HTML body content
 };
 

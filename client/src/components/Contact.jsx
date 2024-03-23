@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FormData from 'form-data';
+import { useSelector } from 'react-redux';
+
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
@@ -9,6 +11,8 @@ export default function Contact({ listing }) {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+
 
   const onChange = (e) => {
     switch (e.target.name) {
@@ -65,6 +69,9 @@ export default function Contact({ listing }) {
     fetchLandlord();
   }, [listing.userRef]);
 
+ 
+  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validate()) {
@@ -73,6 +80,7 @@ export default function Contact({ listing }) {
       data.append('email', email);
       data.append('phone', phone);
       data.append('message', message);
+      data.append('landlordEmail', landlord.email);
 
   const url = '/api/listing/send-email';
 
@@ -109,7 +117,7 @@ export default function Contact({ listing }) {
                 type='text'
                 name='name'
                 id='name'
-                value={name}
+                value={currentUser.username}
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />
@@ -123,7 +131,7 @@ export default function Contact({ listing }) {
                 type='email'
                 name='email'
                 id='email'
-                value={email}
+                value={currentUser.email}
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />
