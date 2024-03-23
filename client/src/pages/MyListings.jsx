@@ -4,7 +4,6 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import './MyListings.css'; // Importing a new CSS file
 
 export default function MyListings() {
