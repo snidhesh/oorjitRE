@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import FormData from 'form-data';
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
@@ -7,6 +8,7 @@ export default function Contact({ listing }) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState({});
 
   const onChange = (e) => {
     switch (e.target.name) {
@@ -26,6 +28,29 @@ export default function Contact({ listing }) {
         break;
     }
   };
+    const validate = () => {
+    const errors = {};
+
+    if (!name) {
+      errors.name = 'This field is required';
+    }
+
+    if (!email) {
+      errors.email = 'This field is required';
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      errors.email = 'Invalid email address';
+    }
+
+    if (!phone) {
+      errors.phone = 'This field is required';
+    } else if (!/^\d{10}$/.test(phone)) {
+      errors.phone = 'Invalid phone number';
+    }
+
+    setErrors(errors);
+
+    return Object.values(errors).length === 0;
+  };
 
   useEffect(() => {
     const fetchLandlord = async () => {
@@ -40,31 +65,32 @@ export default function Contact({ listing }) {
     fetchLandlord();
   }, [listing.userRef]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (validate()) {
+      const data = new FormData();
+      data.append('name', name);
+      data.append('email', email);
+      data.append('phone', phone);
+      data.append('message', message);
 
-    if (!name ||!email ||!phone ||!message) {
-      alert('Please fill in all fields!');
-      return;
-    }
+  const url = '/api/listing/send-email';
 
-    const re = /^(([^<>()[\]\.,;:\s@"]+(\.[^<>()[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(email)) {
-      alert('Invalid email address!');
-      return;
-    }
-
-    const rePhone = /^\+?[1-9]\d{1,14}$/;
-    if (!rePhone.test(phone)) {
-      alert('Invalid phone number!');
-      return;
-    }
-
-    const body = `Name: \nEmail: \nPhone Number: \n\nMessage:\n`;
-
-    window.open(`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=`);
-  };
-
+  fetch(url, {
+    method: 'POST',
+    body: data,
+  })
+   .then((res) => res.json())
+   .then((res) => {
+      if (res.error) {
+        console.error(res.error);
+      } else {
+        console.log('Email sent successfully!');
+      }
+    })
+   .catch((err) => console.error(err));
+  }
+};
   return (
     <>
       {landlord && (
@@ -87,6 +113,7 @@ export default function Contact({ listing }) {
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />
+               {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor='email' className='font-semibold'>
@@ -100,6 +127,7 @@ export default function Contact({ listing }) {
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />
+             {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}  
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor='phone' className='font-semibold'>
@@ -113,6 +141,7 @@ export default function Contact({ listing }) {
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />
+               {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor='message' className='font-semibold'>
@@ -127,17 +156,18 @@ export default function Contact({ listing }) {
                 placeholder='Enter your message here...'
                 className='w-full border p-3 rounded-lg'
               ></textarea>
+               {errors.message && <div style={{ color: 'red' }}>{errors.message}</div>}
             </div>
           </div>
           <form onSubmit={handleSubmit}>
-            <Link
-              to='#'
-              className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
-              onClick={handleSubmit}
-            >
-              Send Message
-            </Link>
-          </form>
+  <button
+    type="submit"
+    className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
+  >
+    Send Message
+  </button>
+</form>
+
         </div>
       )}
     </>

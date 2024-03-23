@@ -1,5 +1,6 @@
 import Listing from '../models/listing.model.js';
 import { errorHandler } from '../utils/error.js';
+import nodemailer from 'nodemailer';
 
 export const createListing = async (req, res, next) => {
   try {
@@ -8,6 +9,39 @@ export const createListing = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+export const sendEmail = async ({ email, subject, text }) => {
+  // function implementation
+
+ // console.log ( "inside sendEmail function");
+
+ const transporter = nodemailer.createTransport({
+  // Transporter configuration (e.g., SMTP)
+  host: 'mail.smtp2go.com',
+  port: 2525,
+  secure: false, // true for 465, false for other ports
+  auth: {
+      user: 'ispgweb.com', // your email address
+      pass: '6kGrFvfrIOC9vAXJ' // your email password
+  }
+});
+
+const mailOptions = {
+  from: 'nidhesh.pillai@ispgweb.com', // sender address
+  to: 'snidhesh@gmail.com', // list of receivers
+  subject: subject || 'Email Subject', // Subject line
+  text: text || 'Email Body', // plain text body
+  // html: '<b>Hello world?</b>' // HTML body content
+};
+
+try {
+  const info = await transporter.sendMail(mailOptions);
+  console.log('Message sent: %s', info.messageId);
+  return true;
+} catch (error) {
+  console.error('Error sending email:', error);
+  return false;
+}
 };
 
 export const deleteListing = async (req, res, next) => {
