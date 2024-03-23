@@ -29,6 +29,25 @@ export default function MyListings() {
     }
   };
 
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     handleShowListings();
   }, []);
@@ -75,7 +94,17 @@ export default function MyListings() {
     ))}
   </div>
 )}
-{/* ... */}
+
+{userListings && userListings.length === 0 && (
+  <div className='no-listings-found'>
+    <p style={{ color: '#666', fontSize: '18px', textAlign: 'center', marginBottom: '30px' }}>
+    No Listings Found!! Start your journey with us now,
+    </p>
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <Link to="/create-listing" className="cta-button">Create Your First Listing</Link>
+    </div>
+  </div>
+)}
 
     </div>
   );
