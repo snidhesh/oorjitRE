@@ -11,8 +11,9 @@ export default function Contact({ listing }) {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [listingName, setListingName] = useState("");
+  
   const { currentUser, loading, error } = useSelector((state) => state.user);
-
 
   const onChange = (e) => {
     switch (e.target.name) {
@@ -59,8 +60,10 @@ export default function Contact({ listing }) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`/api/user/${listing.userRef}`);
+        console.log('userRef:', listing.userRef);  // add console log for userRef
+        const res = await fetch(`/api/user/landlord/${listing.userRef}`);
         const data = await res.json();
+        console.log('Landlord data:', data);  // add console log for the fetched data
         setLandlord(data);
       } catch (error) {
         console.log(error);
@@ -73,32 +76,40 @@ export default function Contact({ listing }) {
   
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    if (validate()) {
-      const data = new FormData();
-      data.append('name', name);
-      data.append('email', email);
-      data.append('phone', phone);
-      data.append('message', message);
-      data.append('landlordEmail', landlord.email);
-
-  const url = '/api/listing/send-email';
-
-  fetch(url, {
-    method: 'POST',
-    body: data,
-  })
-   .then((res) => res.json())
-   .then((res) => {
-      if (res.error) {
-        console.error(res.error);
-      } else {
-        console.log('Email sent successfully!');
+      event.preventDefault();
+      console.log(name, email, phone, message, landlord.email, listing.name);
+      if (validate()) {
+        const data = {
+          name: name,
+          email: email,
+          phone: phone,
+          message: message,
+          landlordEmail: landlord.email,
+          listingName: listing.name
+        }
+  
+        const url = '/api/listing/send-email';
+  
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.error) {
+            console.error(res.error);
+          } else {
+            console.log('Email sent successfully!');
+          }
+        })
+        .catch((err) => console.error(err));
       }
-    })
-   .catch((err) => console.error(err));
-  }
-};
+      // Rest of your code...
+  };
+  
   return (
     <>
       {landlord && (
@@ -117,7 +128,7 @@ export default function Contact({ listing }) {
                 type='text'
                 name='name'
                 id='name'
-                value={currentUser.username}
+                value={name}
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />
@@ -131,7 +142,7 @@ export default function Contact({ listing }) {
                 type='email'
                 name='email'
                 id='email'
-                value={currentUser.email}
+                value={email}
                 onChange={onChange}
                 className='w-full border p-3 rounded-lg'
               />

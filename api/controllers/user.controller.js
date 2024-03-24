@@ -76,4 +76,17 @@ export const getUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}; 
+
+
+export const getLandlord = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      return next(errorHandler(404, 'User not found.'));
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+}

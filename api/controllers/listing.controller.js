@@ -12,15 +12,17 @@ export const createListing = async (req, res, next) => {
 };
 export const sendEmail = async (req, res)=> {
 
-  const { name, email, phone, message , landlordEmail } = req.body;
+  const { name, email, phone, message , landlordEmail ,listingName} = req.body;
   console.log(req.body); 
 
   const text = `
     Name: ${name},
     Email: ${email},
     Phone: ${phone},
-    Message: ${message}
+    Message: ${message},
   `;
+  const emailSubject = `New Enquiry Received - ${listingName}`;
+  const lEmail = `${landlordEmail}`;
 
  const transporter = nodemailer.createTransport({
   // Transporter configuration (e.g., SMTP)
@@ -35,8 +37,9 @@ export const sendEmail = async (req, res)=> {
 
 const mailOptions = {
   from: 'nidhesh.pillai@ispgweb.com', // sender address
-  to: landlordEmail, // list of receivers
-  subject: subject || 'New Enquiry', // Subject line
+  to: lEmail, // list of receivers
+  //to: 'snidhesh@gmail.com', // list of receivers
+  subject: emailSubject || 'New Enquiry', // Subject line
   text: text || message, // plain text body
   // html: '<b>Hello world?</b>' // HTML body content
 };
