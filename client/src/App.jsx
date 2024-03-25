@@ -11,6 +11,7 @@ import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
 import MyListings from './pages/MyListings';
+import MyLeads from './pages/MyLeads';
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,12 +22,14 @@ export default function App() {
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/about' element={<About />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/MyListings' element={<MyListings />} />
+        
         <Route path='/listing/:listingId' element={<Listing />} />
 
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/create-listing' element={<CreateListing />} />
+          <Route path='/MyListings' element={<MyListings />} />
+          <Route path='/MyLeads' element={<MyLeads />} />
           <Route
             path='/update-listing/:listingId'
             element={<UpdateListing />}

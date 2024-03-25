@@ -79,6 +79,7 @@ export default function Contact({ listing }) {
       event.preventDefault();
       console.log(name, email, phone, message, landlord.email, listing.name);
       if (validate()) {
+         
         const data = {
           name: name,
           email: email,
@@ -106,6 +107,38 @@ export default function Contact({ listing }) {
           }
         })
         .catch((err) => console.error(err));
+
+
+      //Leads
+
+      const leadData = {
+        name: name,
+        email: email,
+        phone: phone,
+        message: message,
+        userRef: listing.userRef,
+        listingName: listing.name,
+        listingRef: listing._id
+      }
+
+      const leadURL = '/api/lead/leadInsert';
+
+      fetch(leadURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(leadData)
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) {
+          console.error(res.error);
+        } else {
+          console.log('Lead Saved Successfully!');        }
+      })
+      .catch((err) => console.error(err));
+
       }
       // Rest of your code...
   };

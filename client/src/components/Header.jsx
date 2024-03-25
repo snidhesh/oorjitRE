@@ -125,6 +125,9 @@ export default function Header() {
               <Link to='/mylistings'>My Listings</Link>
             </li>
             <li className='py-2 px-4 hover:bg-slate-200'>
+              <Link to='/myleads'>My Leads</Link>
+            </li>
+            <li className='py-2 px-4 hover:bg-slate-200'>
               <button onClick={handleSignOut}>Sign Out</button>
             </li>
           </ul>
