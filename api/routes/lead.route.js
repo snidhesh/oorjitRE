@@ -1,5 +1,5 @@
 import express from 'express';
-import { insertLead } from '../controllers/lead.controller.js';
+import { insertLead,getLead } from '../controllers/lead.controller.js';
 //import { verifyToken } from '../utils/verifyUser.js';
 
 
@@ -10,5 +10,7 @@ const app = express();
 
 
 router.post('/leadInsert', insertLead);
+router.get('/getLead/:id',getLead);
+
 
 export default router;

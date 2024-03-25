@@ -45,7 +45,7 @@ const mailOptions = {
 };
 
 try {
-  const info = '';//await transporter.sendMail(mailOptions);
+  const info = await transporter.sendMail(mailOptions);
   console.log('Message sent: %s', info.messageId);
   return true;
 } catch (error) {

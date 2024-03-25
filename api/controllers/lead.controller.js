@@ -9,3 +9,20 @@ export const insertLead = async (req, res, next) => {
       next(error);
     }
   };
+
+  
+export const getLead = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const leads = await Lead.find({ userRef: userId });
+
+    if (leads.length > 0) { // 
+      res.json(leads);
+    } else {
+      res.status(404).json({ message: 'No leads found for this user' });
+    } 
+    
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching leads', error: error.message });
+  }
+};

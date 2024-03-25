@@ -1,0 +1,39 @@
+.leads-grid {
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.leads-grid table {
+    width: 100%;
+    text-align: center; /* Center aligns all content in the table */
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    font-size: 0.8em; /* Decrease the font size of the table content */
+}
+
+.leads-grid th, .leads-grid td {
+    padding: 12px 15px;
+}
+
+.leads-grid th {
+    background-color: #5e6e6b;
+    color: white;
+}
+
+.leads-grid td {
+    border: none;
+    vertical-align: middle; /* Center aligns the content vertically in the cells */
+}
+
+.leads-grid tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.leads-grid tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.leads-grid tr:last-of-type {
+    border-bottom: 2px solid #4d5755;
+}
