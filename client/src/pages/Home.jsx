@@ -66,24 +66,23 @@ export default function Home() {
         >
           Let's get started...
         </Link>
+        
       </div>
 
       {/* swiper */}
       <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
+       
             <SwiperSlide>
               <div
                 style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
+                  background: `url('./public/images/image_hero.jpg') center no-repeat`,
                   backgroundSize: 'cover',
                 }}
                 className='h-[500px]'
-                key={listing._id}
+                
               ></div>
             </SwiperSlide>
-          ))}
+          
       </Swiper>
 
       {/* listing results for offer, sale and rent */}
@@ -113,6 +112,9 @@ export default function Home() {
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
+            <div  className='mt-4 text-center'>
+            <img  className='w-full mx-auto'  src="./public/images/02.jpg" alt="Banner description" />
+        </div>
           </div>
         )}
         {saleListings && saleListings.length > 0 && (
@@ -125,10 +127,16 @@ export default function Home() {
               {saleListings.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
+            </div >
+            <div className='mt-4 text-center'>
+            <img className='mx-auto' src="./public/images/03.jpg" alt="Banner description" />
             </div>
           </div>
         )}
       </div>
+{/* Footer */}
+  
+
     </div>
   );
 }
