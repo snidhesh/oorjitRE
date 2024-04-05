@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+//import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css/bundle';
+// import { Navigation } from 'swiper/modules';
+// import 'swiper/css/bundle';
 import {
   FaBath,
   FaBed,
@@ -16,7 +16,7 @@ import {
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
 export default function Listing() {
-  SwiperCore.use([Navigation]);
+  //SwiperCore.use([Navigation]);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -55,7 +55,7 @@ export default function Listing() {
       )}
       {listing && !loading && !error && (
         <div>
-          <Swiper navigation>
+          {/* <Swiper navigation>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <div
@@ -67,7 +67,28 @@ export default function Listing() {
                 ></div>
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> */}
+
+            <div className="max-w-4xl mx-auto">
+              <div className="flex gap-4 mb-4">
+                  <div className="w-3/5 h-96 bg-center bg-cover mb-4" 
+                    style={{backgroundImage: `url(${listing.imageUrls[0]})`}}
+                  ></div>
+                  <div className="w-2/5 grid grid-rows-3 gap-2">
+                    {listing.imageUrls.slice(1, 4).map((url, index) => (
+                      <div key={url} className="h-32 w-full bg-center bg-cover" 
+                          style={{backgroundImage: `url(${url})`}}
+                      ></div>
+                    ))}
+                  </div>
+              </div>
+            </div>
+
+       
+        
+          
+          
+          
           <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
             <FaShare
               className='text-slate-500'

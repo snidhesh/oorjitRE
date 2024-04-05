@@ -2,7 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body{
     background-color: rgb(241, 245, 241);
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  footer {
+    margin-top: auto;
+  }
+
+
+  
