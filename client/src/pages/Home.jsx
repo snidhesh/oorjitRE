@@ -75,7 +75,7 @@ export default function Home() {
             <SwiperSlide>
               <div
                 style={{
-                  background: `url('./public/images/image_hero.jpg') center no-repeat`,
+                  background: `url('/images/image_hero.jpg') center no-repeat`,
                   backgroundSize: 'cover',
                 }}
                 className='h-[500px]'
@@ -113,7 +113,7 @@ export default function Home() {
               ))}
             </div>
             <div  className='mt-4 text-center'>
-            <img  className='w-full mx-auto'  src="./public/images/02.jpg" alt="Banner description" />
+            <img  className='w-full mx-auto'  src="/images/02.jpg" alt="Banner description" />
         </div>
           </div>
         )}
@@ -129,7 +129,7 @@ export default function Home() {
               ))}
             </div >
             <div className='mt-4 text-center'>
-            <img className='mx-auto' src="./public/images/03.jpg" alt="Banner description" />
+            <img className='mx-auto' src="/images/03.jpg" alt="Banner description" />
             </div>
           </div>
         )}
