@@ -59,7 +59,7 @@ export default function Header() {
     <header className='bg-slate-200 shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to='/'>
-          <img className='w-28 h-auto' src={"./public/images/logo.svg"} alt="oOrjit Real Estate" />
+          <img className='w-28 h-auto' src={"/images/logo.svg"} alt="oOrjit Real Estate" />
         </Link>
         
         <form
